@@ -1,33 +1,42 @@
 @import "helpers";
-@import "fonts/clear-sans.css";
+@import "fonts/neon-fonts.css";
 
 $field-width: 500px;
 $grid-spacing: 15px;
 $grid-row-cells: 4;
 $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells;
-$tile-border-radius: 3px;
+$tile-border-radius: 6px;
 
 $mobile-threshold: $field-width + 20px;
 
-$text-color: #776E65;
-$bright-text-color: #f9f6f2;
+$body-font: "Exo 2", "Helvetica Neue", Arial, sans-serif;
+$display-font: "Orbitron", "Exo 2", "Helvetica Neue", Arial, sans-serif;
 
-$tile-color: #eee4da;
-$tile-gold-color: #edc22e;
-$tile-gold-glow-color: lighten($tile-gold-color, 15%);
+$text-color: #f3e9ff;
+$bright-text-color: #ffffff;
+$dark-text-color: #14052e;
+
+$neon-cyan: #00f0ff;
+$neon-magenta: #ff2bd6;
+
+$tile-color: #004144;
 
 $game-container-margin-top: 40px;
-$game-container-background: #bbada0;
+$game-container-background: #140533;
 
 $transition-speed: 100ms;
+
+html {
+  min-height: 100%;
+  background: #12042b linear-gradient(165deg, #12042b 0%, #2b0a57 45%, #6a1270 75%, #b01a78 100%) fixed;
+}
 
 html, body {
   margin: 0;
   padding: 0;
 
-  background: #faf8ef;
   color: $text-color;
-  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: $body-font;
   font-size: 18px;
 }
 
@@ -37,12 +46,24 @@ body {
 
 .heading {
   @include clearfix;
+  margin-bottom: 12px;
 }
 
 h1.title {
-  font-size: 80px;
-  font-weight: bold;
-  margin: 0;
+  // Chrome: bright sky, dark horizon, then a pink reflection
+  color: $text-color;
+  background: linear-gradient(180deg, #f7fbff 0%, #b8d4f0 30%, #5b7fb5 47%, #1b1f4a 50%, #f2d6ff 53%, #ff7ad9 78%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-filter: drop-shadow(0 0 6px rgba($neon-magenta, .7));
+  filter: drop-shadow(0 0 6px rgba($neon-magenta, .7));
+  font-family: $display-font;
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 900;
+  white-space: nowrap;
+  margin: 18px 0 0;
   display: block;
   float: left;
 }
@@ -69,14 +90,16 @@ h1.title {
 
   position: relative;
   display: inline-block;
-  background: $game-container-background;
-  padding: 15px 25px;
+  background: rgba($game-container-background, .8);
+  box-shadow: inset 0 0 0 1px rgba($neon-cyan, .6), 0 0 10px rgba($neon-cyan, .35);
+  padding: 15px;
+  min-width: 40px;
   font-size: $height;
   height: $height;
   line-height: $height + 22px;
-  font-weight: bold;
-  border-radius: 3px;
-  color: white;
+  font-weight: 800;
+  border-radius: $tile-border-radius;
+  color: $bright-text-color;
   margin-top: 8px;
   text-align: center;
 
@@ -89,13 +112,12 @@ h1.title {
     font-size: 13px;
     line-height: 13px;
     text-align: center;
-    color: $tile-color;
+    color: $neon-cyan;
   }
 
   .score-addition {
     position: absolute;
     right: 30px;
-    color: red;
     font-size: $height;
     line-height: $height;
     font-weight: bold;
@@ -121,7 +143,7 @@ p {
 }
 
 a {
-  color: $text-color;
+  color: $neon-cyan;
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
@@ -135,7 +157,7 @@ strong {
 
 hr {
   border: none;
-  border-bottom: 1px solid lighten($text-color, 40%);
+  border-bottom: 1px solid rgba($neon-cyan, .35);
   margin-top: 20px;
   margin-bottom: 30px;
 }
@@ -158,11 +180,12 @@ hr {
 // Styles for buttons
 @mixin button {
   display: inline-block;
-  background: darken($game-container-background, 20%);
-  border-radius: 3px;
+  background: $neon-magenta;
+  box-shadow: 0 0 12px rgba($neon-magenta, .7);
+  border-radius: $tile-border-radius;
   padding: 0 20px;
   text-decoration: none;
-  color: $bright-text-color;
+  color: $dark-text-color;
   height: 40px;
   line-height: 42px;
 }
@@ -186,6 +209,7 @@ hr {
     touch-action: none;
 
     background: $game-container-background;
+    box-shadow: inset 0 0 0 2px rgba($neon-magenta, .6), 0 0 24px rgba($neon-magenta, .5);
     border-radius: $tile-border-radius * 2;
     width: $field-width;
     height: $field-width;
@@ -201,14 +225,18 @@ hr {
       right: 0;
       bottom: 0;
       left: 0;
-      background: rgba($tile-color, .5);
+      background: rgba($game-container-background, .8);
+      border-radius: $tile-border-radius * 2;
       z-index: 100;
 
       text-align: center;
 
       p {
-        font-size: 60px;
-        font-weight: bold;
+        color: $neon-magenta;
+        text-shadow: 0 0 14px rgba($neon-magenta, .8);
+        font-family: $display-font;
+        font-size: 44px;
+        font-weight: 800;
         height: 60px;
         line-height: 60px;
         margin-top: 222px;
@@ -235,8 +263,10 @@ hr {
       @include animation-fill-mode(both);
 
       &.game-won {
-        background: rgba($tile-gold-color, .5);
-        color: $bright-text-color;
+        p {
+          color: $neon-cyan;
+          text-shadow: 0 0 14px rgba($neon-cyan, .8);
+        }
 
 	a.keep-playing-button {
 	  display: inline-block;
@@ -276,7 +306,7 @@ hr {
 
     border-radius: $tile-border-radius;
 
-    background: rgba($tile-color, .35);
+    background: rgba($neon-cyan, .07);
 
     &:last-child {
       margin-right: 0;
@@ -311,6 +341,12 @@ hr {
 // End of game-field mixin
 @include game-field;
 
+// $strength runs from 0 (dimmest) to 1 (brightest)
+@mixin tile-glow($color, $strength, $max-blur) {
+  box-shadow: inset 0 0 0 2px rgba($color, .35 + .65 * $strength),
+              0 0 (4px + $max-blur * $strength) (1px + 2px * $strength) rgba($color, .35 + .6 * $strength);
+}
+
 .tile {
   position: absolute; // Makes transforms relative to the top-left corner
 
@@ -318,8 +354,9 @@ hr {
     border-radius: $tile-border-radius;
 
     background: $tile-color;
+    color: $bright-text-color;
     text-align: center;
-    font-weight: bold;
+    font-weight: 800;
     z-index: 10;
 
     font-size: 55px;
@@ -335,50 +372,49 @@ hr {
   $exponent: 1;
   $limit: 11;
 
-  // Colors for all 11 states, false = no special color
-  $special-colors: false false, // 2
-                   false false, // 4
-                   #f78e48 true, // 8
-                   #fc5e2e true, // 16
-                   #ff3333 true, // 32
-                   #ff0000 true, // 64
-                   false true, // 128
-                   false true, // 256
-                   false true, // 512
-                   false true, // 1024
-                   false true; // 2048
+  // Cyan and magenta take turns, and every step is brighter than the last:
+  // background and whether the text needs to be dark
+  $tile-colors: $tile-color false, // 2
+                #7b006c false, // 4
+                #006469 false, // 8
+                #af009a false, // 16
+                #008a90 true, // 32
+                #e700cc true, // 64
+                #00b2b9 true, // 128
+                #ff6ee5 true, // 256
+                #00dce5 true, // 512
+                #ffbbef true, // 1024
+                #9efaff true; // 2048
 
   // Build tile colors
   @while $exponent <= $limit {
     $power: pow($base, $exponent);
 
     &.tile-#{$power} .tile-inner {
-      // Calculate base background color
-      $gold-percent: ($exponent - 1) / ($limit - 1) * 100;
-      $mixed-background: mix($tile-gold-color, $tile-color, $gold-percent);
-
-      $nth-color: nth($special-colors, $exponent);
-
-      $special-background: nth($nth-color, 1);
-      $bright-color: nth($nth-color, 2);
-
-      @if $special-background {
-        $mixed-background: mix($special-background, $mixed-background, 55%);
-      }
-
-      @if $bright-color {
-        color: $bright-text-color;
-      }
+      $nth-color: nth($tile-colors, $exponent);
 
       // Set background
-      background: $mixed-background;
+      background: nth($nth-color, 1);
 
       // Add glow
-      $glow-opacity: max($exponent - 4, 0) / ($limit - 4);
+      $glow-color: $neon-cyan;
 
-      @if not $special-background {
-        box-shadow: 0 0 30px 10px rgba($tile-gold-glow-color, $glow-opacity / 1.8),
-                    inset 0 0 0 1px rgba(white, $glow-opacity / 3);
+      @if $exponent % 2 == 0 {
+        $glow-color: $neon-magenta;
+      }
+
+      $glow-strength: ($exponent - 1) / ($limit - 1);
+
+      @include tile-glow($glow-color, $glow-strength, 12px);
+
+      @include smaller($mobile-threshold) {
+        @include tile-glow($glow-color, $glow-strength, 6px);
+      }
+
+      @if nth($nth-color, 2) {
+        color: $dark-text-color;
+      } @else {
+        text-shadow: 0 0 8px $glow-color;
       }
 
       // Adjust font size for bigger numbers
@@ -403,13 +439,15 @@ hr {
 
   // Super tiles (above 2048)
   &.tile-super .tile-inner {
-    color: $bright-text-color;
-    background: mix(#333, $tile-gold-color, 95%);
+    color: $dark-text-color;
+    background: $bright-text-color;
+    box-shadow: inset 0 0 0 2px $neon-cyan, 0 0 10px 2px $neon-cyan, 0 0 18px 4px $neon-magenta;
 
     font-size: 30px;
 
     @include smaller($mobile-threshold) {
       font-size: 10px;
+      box-shadow: inset 0 0 0 2px $neon-cyan, 0 0 6px 1px $neon-cyan, 0 0 10px 2px $neon-magenta;
     }
   }
 }
@@ -473,13 +511,13 @@ hr {
 }
 
 @include smaller($mobile-threshold) {
-  // Redefine variables for smaller screens
-  $field-width: 280px;
-  $grid-spacing: 10px;
-  $grid-row-cells: 4;
-  $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells;
-  $tile-border-radius: 3px;
-  $game-container-margin-top: 17px;
+  // Redefine variables for smaller screens (!global so the game-field mixin sees them)
+  $field-width: 280px !global;
+  $grid-spacing: 10px !global;
+  $grid-row-cells: 4 !global;
+  $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) / $grid-row-cells !global;
+  $tile-border-radius: 4px !global;
+  $game-container-margin-top: 17px !global;
 
   html, body {
     font-size: 15px;
@@ -491,8 +529,8 @@ hr {
   }
 
   h1.title {
-    font-size: 27px;
-    margin-top: 15px;
+    font-size: 20px;
+    margin-top: 20px;
   }
 
   .container {
@@ -502,8 +540,9 @@ hr {
 
   .score-container, .best-container {
     margin-top: 0;
-    padding: 15px 10px;
+    padding: 15px 6px;
     min-width: 40px;
+    font-size: 18px;
   }
 
   .heading {
@@ -531,6 +570,7 @@ hr {
 
   // Rest of the font-size adjustments in the tile class
   .tile .tile-inner {
+    border-radius: $tile-border-radius;
     font-size: 35px;
   }
 

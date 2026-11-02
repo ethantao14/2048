@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Orbitron";
+    src: url("Orbitron.woff2") format("woff2");
+    font-weight: 400 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Exo 2";
+    src: url("Exo2.woff2") format("woff2");
+    font-weight: 400 800;
+    font-style: normal;
+}
